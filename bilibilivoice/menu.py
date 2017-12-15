@@ -1,6 +1,7 @@
 import time
 import re
 import curses
+import webbrowser
 
 from . import logger
 from .ui import Ui
@@ -279,8 +280,8 @@ class Menu(object):
 
         if idx == 3:
             self.title += ' > 帮助'
-            self.datatype = 'help'
-            self.datalist = []
+            webbrowser.open_new_tab(
+                'https://github.com/gogoforit/bilibili-voice')
 
 
         self.offset = 0
