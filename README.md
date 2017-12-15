@@ -145,7 +145,7 @@ $ python3 setup.py install
 
 ## 运行
 ```
-$ bilibilimusic
+$ bilibilivoice
 ```
 ## 使用演示
 ![](https://storage6.cuntuku.com/2017/12/15/KlmRE.gif)
