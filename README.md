@@ -96,7 +96,7 @@ BiliBili弹幕网命令行版本，提供在命令行下在线收听BiliBili的�
 ### 依赖
 以下为必要依赖，需要单独安装。
 
-**1. mpv**<br>
+#### 1. mpv<br>
 **Mac OS**
 ```
 $ brew install mpv
@@ -105,10 +105,9 @@ $ brew install mpv
 ```
 $ (sudo)apt-get install mpv
 ```
-**Windows**<br>
-[mpv download](https://mpv.io/installation/)
+----------------------------------------
+#### 2. youtube-dl<br>
 
-**2. youtube-dl**<br>
 **Mac OS下安装mpv会自动安装youtube-dl**
 
 **Ubuntu/Debian**
@@ -119,15 +118,11 @@ $ (sudo)apt-get install youtube-dl
 ```
 $ pip3 install youtube-dl
 ```
-**Windows**
-```
-$ pip3 install youtube-dl
-```
 
 
 ### 选项1 通过pip安装
 ```
-$ pip install bilibili-voice
+$ pip3 install bilibili-voice
 ```
 
 ### 选项2 通过Git Clone安装
