@@ -2,6 +2,7 @@ import time
 import re
 import curses
 import webbrowser
+import types
 
 from . import logger
 from .ui import Ui
@@ -109,6 +110,7 @@ class Menu(object):
                         len(datalist), offset + step) - 1, idx + 1)
 
             elif key == ord('d'):
+                self.ui.error_flag = False
                 self.enter_flag = True
                 if len(self.datalist) <= 0:
                     continue
@@ -120,6 +122,7 @@ class Menu(object):
                     self.offset = 0
 
             elif key == ord('a'):
+                self.ui.error_flag = False
                 # if not main menu
                 if len(self.stack) == 1:
                     continue
@@ -227,28 +230,29 @@ class Menu(object):
                 self.datalist = self.bilibilivoice.get_auditorium_channel_detailed(data)
             else:
                 data = self.datalist[idx]
-                self.datatype = 'channel_list'
                 self.generate_obj = self.bilibilivoice.channel_list(data)
-                self.datalist = next(self.generate_obj)
-                self.title = title + ' > ' + data
+                try:
+                    self.datalist = next(self.generate_obj)
+                    self.datatype = 'channel_list'
+                    self.title = title + ' > ' + data
+                except Exception as e:
+                    log.error(e)
+                    self.pop(idx)
+                    self.ui.error_flag = True
 
-        elif self.datatype == 'search':
-            # self.ui.build_search_bar()
-            self.generate_obj = self.ui.build_search()
-            keyword = self.ui.keyword
-            log.debug('ui.keyword' + self.ui.keyword)
-            self.datatype = 'channel_list'
-            self.datalist = next(self.generate_obj)
-            self.title = title + ' > ' + keyword
         else:
-            stack = self.stack
-            up = stack.pop()
-            self.datatype = up[0]
-            self.title = up[1]
-            self.datalist = up[2]
-            self.offset = up[3]
-            self.index = idx
-            self.enter_flag = False
+            self.pop(idx)
+
+    # 没有下一级目录，就不进入下一级目录
+    def pop(self, idx):
+        stack = self.stack
+        up = stack.pop()
+        self.datatype = up[0]
+        self.title = up[1]
+        self.datalist = up[2]
+        self.offset = up[3]
+        self.index = idx
+        self.enter_flag = False
 
     def choice_channel(self, idx):
         bilibilivoice = self.bilibilivoice
@@ -272,11 +276,19 @@ class Menu(object):
             # 直接在此处生成用于搜索数据的生成器
             # dispatch_enter中要触发才行，而进入搜索界面以后，是已经不会触发按键事件了
             self.generate_obj = self.ui.build_search()
-            self.datatype = 'channel_list'
-            self.datalist = next(self.generate_obj)
-            keyword = self.ui.keyword
-            self.title = self.title + ' > ' + keyword
-            log.debug('ui.keyword' + self.ui.keyword)
+
+            try:
+                self.datalist = next(self.generate_obj)
+                self.datatype = 'channel_list'
+                keyword = self.ui.keyword
+                self.title = self.title + ' > ' + keyword
+                log.debug('search keyword:' + self.ui.keyword)
+            except Exception as e:
+                log.error(e)
+                self.pop(idx)
+                self.ui.error_flag = True
+                log.debug('search keyword:' + self.ui.keyword)
+
 
         if idx == 3:
             self.title += ' > 帮助'

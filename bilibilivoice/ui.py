@@ -38,6 +38,7 @@ class Ui(object):
         self.indented_startcol = max(self.startcol - 3, 0)
         self.wave_list = ['▁', '▂', '▃', '▅', '▆', '▇']
         self.keyword = ''
+        self.error_flag = False
 
     def addstr(self, *args):
         if len(args) == 1:
@@ -123,7 +124,13 @@ class Ui(object):
             self.addstr(iter_range - offset + 9, 0, ' ' * self.x)
 
         elif datatype == 'search':
+            self.build_request_error()
             self.build_search_bar()
+
+
+        elif datatype == 'page_request_error':
+            self.build_request_error()
+            self.screen.refresh()
 
         else:
             # main, music_channel, channel等目录的刷新
@@ -136,7 +143,8 @@ class Ui(object):
                 else:
                     self.addstr(i - offset + 9, self.startcol,
                                 str(i) + '. ' + datalist[i])
-
+            if self.error_flag:
+                self.build_request_error()
         self.screen.refresh()
 
     def build_add_av(self):
@@ -229,6 +237,11 @@ class Ui(object):
         bilibilibvoice = self.bilibilivoice
         generate_search = bilibilibvoice.get_search(keyword)
         return generate_search
+
+    def build_request_error(self):
+        content = '艾玛...好像有不知名的生物干扰了您的网络呢 (/= _ =)/~┴┴'
+        self.addstr(19, self.startcol - 8, content, curses.color_pair(1))
+
 
     def get_search_keyword(self):
         self.screen.timeout(-1)  # disable the screen timeout

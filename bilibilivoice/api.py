@@ -263,7 +263,11 @@ class BiliBiliVoice(object):
                 '_': time_stamp
             }
             url = 'https://api.bilibili.com/x/web-interface/newlist'
-            response_text = self.http_request('GET', url, data)
+            try:
+                response_text = self.http_request('GET', url, data)
+            except requests.exceptions.RequestException as e:
+                log.error(e)
+                return {'code': 501}
             songs_info_str = re.findall('.*("archives":.*?]),"page".*', response_text, re.S)[0]
             songs_info_str = ''.join(['{', songs_info_str, '}'])
             songs_info_json = json.loads(songs_info_str)
@@ -299,6 +303,10 @@ class BiliBiliVoice(object):
         url = 'https://api.bilibili.com/x/player/pagelist'
         try:
             response_json = self.http_request('GET', url, data)
+        except requests.exceptions.RequestException as e:
+            log.error(e)
+            return {'code': 501}
+        try:
             json_data = json.loads(response_json)
             total_time = json_data['data'][0]['duration']
         except Exception as e:
@@ -317,7 +325,11 @@ class BiliBiliVoice(object):
                 '_': time_stamp
             }
             url = 'https://search.bilibili.com/ajax_api/video'
-            response_text = self.http_request('GET', url, data)
+            try:
+                response_text = self.http_request('GET', url, data)
+            except requests.exceptions.RequestException as e:
+                log.error(e)
+                return {'code': 501}
             response_json = json.loads(response_text)
             html = response_json['html']
             try:
