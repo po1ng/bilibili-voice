@@ -2,7 +2,8 @@ import subprocess
 import re
 import time
 import threading
-
+import time
+from datetime import datetime
 
 from .utils import str_to_time, time_to_str
 from .api import BiliBiliVoice
@@ -124,6 +125,7 @@ class Player(object):
             while True:
                 if self.playing_flag is False:
                     break
+                process_location = self.process_length
                 self.process_location = int(self.player.process_location)
                 self.remaining = int(self.player.remaining)
                 self.now_time = time_to_str(self.process_location)
@@ -138,6 +140,17 @@ class Player(object):
                 self.total_time = time_to_str(self.process_length)
                 if self.process_location == self.process_length and self.process_length is not 0:
                     self.playing_flag = False
+                if not self.pause_flag and self.process_length == process_location:
+                    a = datetime.now()
+                    while process_location == self.process_location:
+                        self.process_location = int(self.player.process_location)
+                        b = datetime.now()
+                        if (b-a).seconds > 20:
+                            log.debug('changing song or playing song die, av number:' + str(self.playing_id))
+                            self.change_flag = True
+                            break
+
+
 
         self.play_thread = threading.Thread(target=runInThread, args=())
         self.play_thread.setDaemon(True)
