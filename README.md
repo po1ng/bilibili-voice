@@ -1,5 +1,8 @@
 # BiliBili-Voice
 
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.txt)
+[![platform](https://img.shields.io/badge/python-3.5-green.svg)]()
+
 ##  简介
 我真是爱死B站这破站了！所以这也算是小小地为B站做点贡献啦~
 BiliBili弹幕网命令行版本，提供在命令行下在线收听BiliBili的视频。
