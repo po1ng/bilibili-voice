@@ -127,13 +127,23 @@ html_sidebars = {
 
 
 latex_elements = {
+    # The paper size ('letterpaper' or 'a4paper').
+    # 'papersize': 'letterpaper',
+
+    # The font size ('10pt', '11pt' or '12pt').
+    # 'pointsize': '10pt',
+
     # Additional stuff for the LaTeX preamble.
-    'preamble': "".join((
-        '\DeclareUnicodeCharacter{00A0}{ }',  # NO-BREAK SPACE
-        '\DeclareUnicodeCharacter{251C}{+}',  # BOX DRAWINGS LIGHT VERTICAL AND RIGHT
-        '\DeclareUnicodeCharacter{2514}{+}',  # BOX DRAWINGS LIGHT UP AND RIGHT
-    )),
+    # 'preamble': '',
+
+    # Latex figure (float) alignment
+    # 'figure_align': 'htbp',
 }
+
+latex_documents = [
+    (master_doc, 'bilibili-voice.tex', 'bilibili-voice Documentation',
+     'gogoforit', 'manual'),
+]
 
 
 # -- Options for HTMLHelp output ------------------------------------------
