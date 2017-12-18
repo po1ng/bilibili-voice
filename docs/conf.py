@@ -71,7 +71,7 @@ release = '1.0'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'zh_CN'
+language = 'zh'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -83,6 +83,11 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
+
+
+# If true, the current module name will be prepended to all description
+# unit titles (such as .. function::).
+add_module_names = True
 
 
 # -- Options for HTML output ----------------------------------------------
