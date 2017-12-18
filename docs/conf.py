@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# bilibibili-voice documentation build configuration file, created by
-# sphinx-quickstart on Sun Dec 17 16:51:23 2017.
+# bilibili voice documentation build configuration file, created by
+# sphinx-quickstart on Mon Dec 18 19:24:01 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -19,9 +19,7 @@
 #
 import os
 import sys
-# sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('..'))
-
 
 
 # -- General configuration ------------------------------------------------
@@ -54,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'bilibibili-voice'
+project = 'bilibili voice'
 copyright = '2017, gogoforit'
 author = 'gogoforit'
 
@@ -125,7 +123,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'bilibibili-voicedoc'
+htmlhelp_basename = 'bilibilivoicedoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -152,7 +150,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'bilibibili-voice.tex', 'bilibibili-voice Documentation',
+    (master_doc, 'bilibilivoice.tex', 'bilibili voice Documentation',
      'gogoforit', 'manual'),
 ]
 
@@ -162,7 +160,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'bilibibili-voice', 'bilibibili-voice Documentation',
+    (master_doc, 'bilibilivoice', 'bilibili voice Documentation',
      [author], 1)
 ]
 
@@ -173,8 +171,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'bilibibili-voice', 'bilibibili-voice Documentation',
-     author, 'bilibibili-voice', 'One line description of project.',
+    (master_doc, 'bilibilivoice', 'bilibili voice Documentation',
+     author, 'bilibilivoice', 'One line description of project.',
      'Miscellaneous'),
 ]
 
