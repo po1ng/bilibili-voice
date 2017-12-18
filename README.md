@@ -153,7 +153,7 @@ $ bilibilivoice
 搜索开放[Issues](https://github.com/gogoforit/bilibili-voice/issues)。 如果没人报告，开个新[Issues](https://github.com/gogoforit/bilibili-voice/issues)， 加上详细的命令行输出。
 
 ## 文档
-TAT我正在补详细的开发者文档，完成第一时间会将此模块补齐。致歉。
+开发者[文档](http://bilibili-voice.readthedocs.io/zh/latest/)在这里，内容我还在根据功能的增加不断完善。
 
 
 ## 协助开发
