@@ -21,6 +21,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
+# import bilibilivoice
 
 # -- General configuration ------------------------------------------------
 
@@ -70,7 +71,7 @@ release = '1.0'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'zh_CN'
+language = 'zh'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -82,6 +83,11 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
+
+
+# If true, the current module name will be prepended to all description
+# unit titles (such as .. function::).
+add_module_names = True
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -118,6 +124,26 @@ html_sidebars = {
         'searchbox.html',
     ]
 }
+
+
+latex_elements = {
+    # The paper size ('letterpaper' or 'a4paper').
+    # 'papersize': 'letterpaper',
+
+    # The font size ('10pt', '11pt' or '12pt').
+    # 'pointsize': '10pt',
+
+    # Additional stuff for the LaTeX preamble.
+    # 'preamble': '',
+
+    # Latex figure (float) alignment
+    # 'figure_align': 'htbp',
+}
+
+latex_documents = [
+    (master_doc, 'bilibili-voice.tex', 'bilibili-voice Documentation',
+     'gogoforit', 'manual'),
+]
 
 
 # -- Options for HTMLHelp output ------------------------------------------
