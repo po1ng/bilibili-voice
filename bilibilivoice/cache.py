@@ -26,7 +26,9 @@ log = logger.getLogger(__name__)
 
 
 class Cache(Singleton):
-
+    """
+    将来要使用到的缓存类，当前版本还未使用到
+    """
     def __init__(self):
         if hasattr(self, '_init'):
             return

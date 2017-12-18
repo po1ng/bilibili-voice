@@ -16,6 +16,33 @@ log = logger.getLogger(__name__)
 
 
 class MyMPV(MPV):
+    """
+    根据mpv基类，构造自己需要的mpv功能
+
+    例如获取当前的播放进度
+
+    ..  code-block:: python
+
+         def on_property_time_pos(self, position=None):
+             if position is None:
+                 return
+             self.process_location = int(position)
+                 return
+
+    例如构造播放功能
+
+    ..  code-block:: python
+
+          def play(self):
+              self.set_property("pause", False)
+
+
+    .. note:: 提示
+
+        具体需要获取哪些属性和方法，可以参考mpv的官方文档
+
+        https://mpv.io/manual/stable/
+    """
     #-------------------------------------------------------------------------
     # Initialization.
     #-------------------------------------------------------------------------
@@ -48,6 +75,10 @@ class MyMPV(MPV):
     # The same applies to property change events:
     # "time-pos" -> on_property_time_pos().
     def on_property_time_pos(self, position=None):
+        """
+        返回时间，单位：秒
+        :return: 时间，单位：秒
+        """
         if position is None:
             return
         self.process_location = int(position)
@@ -91,7 +122,9 @@ class MyMPV(MPV):
 
 
 class Player(object):
-
+    """
+    音乐播放播放的类
+    """
     def __init__(self):
         self.ui = Ui()
         self.bilibilivoice = BiliBiliVoice()
@@ -114,11 +147,15 @@ class Player(object):
         self.songs = self.storage.database['songs']
 
     def play(self, av_number):
+        """
+        启动播放器
+
+        :param av_number: 播放的B站av_id
+        """
         self.playing_flag = True
         self.playing_id = av_number
         play_url = 'https://www.bilibili.com/video/av{av_number}'.format(av_number=av_number)
 
-        # TODO 播放卡死后，或者播放超时之后，直接播放下一首
         def runInThread():
             self.player = MyMPV(play_url)
             self.player.play()
@@ -150,8 +187,6 @@ class Player(object):
                             self.change_flag = True
                             break
 
-
-
         self.play_thread = threading.Thread(target=runInThread, args=())
         self.play_thread.setDaemon(True)
         self.play_thread.start()
@@ -159,6 +194,12 @@ class Player(object):
 
     # TODO 切换新的歌曲时，location进度条临时性没有归零
     def new_play(self, av_number):
+        """
+        切换新的播放歌曲
+
+        :param av_number: 播放的B站av_id
+
+        """
         self.playing_id = av_number
         self.process_location = 0
         self.now_time = time_to_str(self.process_location)
@@ -167,16 +208,31 @@ class Player(object):
         self.player.new_play(play_url)
 
     def add_music_list(self, av_number):
+        """
+        加入歌曲到播放列表
+
+        :param av_number: 播放的B站av_id
+        """
         play_url = 'https://www.bilibili.com/video/av{av_number}'.format(av_number=av_number)
         self.player.add_music_list(play_url)
 
     def play_and_pause(self):
+        """
+        播放或者暂停播放
+
+        :meth:`pause`
+
+        :meth:`resume`
+        """
         if not self.pause_flag:
             self.pause()
         else:
             self.resume()
 
     def stop_music(self):
+        """
+        退出播放
+        """
         if self.playing_flag and self.player:
             self.playing_flag = False
             try:
@@ -185,6 +241,9 @@ class Player(object):
                 log.error(e)
 
     def quit(self):
+        """
+        退出播放
+        """
         if self.playing_flag and self.player:
             self.playing_flag = False
             try:
@@ -193,6 +252,9 @@ class Player(object):
                 log.error(e)
 
     def pause(self):
+        """
+        暂停播放 如果当前没有正在播放音乐，或者播放类为空则直接跳过
+        """
         if not self.playing_flag and not self.player:
             return
         self.pause_flag = True
@@ -203,6 +265,9 @@ class Player(object):
             return
 
     def resume(self):
+        """
+        继续播放
+        """
         self.pause_flag = False
         try:
             self.player.resume()

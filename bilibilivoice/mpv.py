@@ -56,8 +56,18 @@ class MPVTimeoutError(MPVError):
 
 
 class MPVBase:
-    """Base class for communication with the mpv media player via unix socket
-       based JSON IPC.
+    """
+    Base class for communication with the mpv media player via unix socket
+    based JSON IPC.
+
+    用于控制mpv的类，因为尝试通过管道控制mpv，但是好像mpv不支持管道...所有就
+    只能通过json来中间控制了
+
+    ..  note:: 提示
+
+        可以参考mpv的官方文档
+
+        https://mpv.io/manual/stable/
     """
 
     executable = find_executable("mpv")

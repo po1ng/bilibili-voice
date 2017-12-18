@@ -24,6 +24,9 @@ with open(FILE_NAME, 'a+') as f:
 
 
 def getLogger(name):
+    """
+    重新构造了日志的使用方式
+    """
     log = logging.getLogger(name)
     log.setLevel(logging.DEBUG)
 

@@ -15,7 +15,9 @@ from time import time
 
 
 class scrollstring(object):
-
+    """
+    构造滚动标题的类
+    """
     def __init__(self, content, START):
         self.content = content  # the true content of the string
         self.display = content  # the displayed string
@@ -47,6 +49,9 @@ def truelen(string):
     It appears one Asian character takes two spots, but __len__
     counts it as three, so this function counts the dispalyed
     length of the string.
+
+    将汉字的所占的长度进行重新地换算，因为单纯地用Python自带的长度计算方法有
+    错误
 
     >>> truelen('abc')
     3

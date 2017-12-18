@@ -138,6 +138,86 @@ channel_rid_map = {
 class BiliBiliVoice(object):
     """
     解析BiliBili的接口类
+
+    各栏目请求的id号
+
+    =================  ==========
+    栏目名               id
+    =================  ==========
+    原创音乐                28
+    翻唱                   31
+    VOCALOID·UTAU         30
+    演奏                   59
+    三次元音乐              29
+    OP/ED/OST             54
+    音乐选集               130
+    宅舞                  20
+    三次元舞蹈             154
+    舞蹈教程               156
+    单机游戏               17
+    电子竞技               171
+    手机游戏               172
+    网络游戏               65
+    桌游棋牌              173
+    GMV                  121
+    音游                  136
+    Mugen                19
+    趣味科普人文           124
+    野生技术协会           122
+    演讲• 公开课           39
+    星海                  96
+    数码                  95
+    机械                  98
+    汽车                  176
+    搞笑                  138
+    日常                  21
+    美食圈                76
+    动物圈                75
+    手工                  161
+    绘画                  162
+    ASMR                 175
+    运动                  163
+    其他                  174
+    鬼畜调教               22
+    音MAD                 26
+    人力VOCALOID          126
+    教程演示               127
+    美妆                  157
+    服饰                  158
+    健身                  164
+    资讯                  159
+    综艺                  71
+    明星                  137
+    Korea                131
+    影视杂谈               182
+    影视剪辑               183
+    短片                   85
+    预告 资讯              184
+    特摄                   86
+    人文历史                37
+    科学探索               178
+    热血军事               179
+    舌尖上的旅行            180
+    华语电影               147
+    欧美电影               145
+    日本电影               146
+    其他国家                83
+    国产剧                185
+    海外剧                187
+    =================  ==========
+
+
+    **歌曲信息的返回格式**
+
+    ..  code-block:: python
+
+         {
+           'up_name': '叫我BAT',
+           'aid': '11794042',
+           'tname': '搜索',
+           'title': '【神奇女侠】高潮部分【1080P超清片段】'
+         }
+
     """
     def __init__(self):
         self.header = {
@@ -158,6 +238,23 @@ class BiliBiliVoice(object):
             urlencoded=None,
             callback=None,
             timeout=None):
+        """
+        封装api的网络请求
+
+        :param method: 请求的方法， GET/POST
+
+        :param url: 请求的地址
+
+        :param query: 查询的参数
+
+        :param urlencoded:
+
+        :param callback:
+
+        :param timeout:
+
+        :return: 返回的字符串
+        """
         connection = self.raw_http_request(method, url, query, urlencoded, callback, timeout)
         # print(connection)
         return connection
@@ -195,8 +292,11 @@ class BiliBiliVoice(object):
         """
         处理出唧唧上的mp3的下载地址，其中有两次重定向，然后要通过ref中的一个加密字符串来解析出最终
         的下载地址，通过直接执行js代码，来获取出最红mp3的下载地址
+
         :param av_number: 想要下载的av号
+
         :return: av_number对应的mp3下载地址
+
         """
         url = 'http://www.jijidown.com/video/{av_number}/'
         av_number = av_number.replace(' ', '')
@@ -220,8 +320,11 @@ class BiliBiliVoice(object):
     def _decrypt_js(self, ref_url):
         """
         解析哔哩哔哩唧唧上的mp3下载地址
+
         :param ref_url: 中间跳转的地址
+
         :return: mp3下载地址
+
         """
         mp3_down_url = execjs.compile(open(r"asset/analyze-url.js").read()).call('test', ref_url)
         return mp3_down_url
@@ -229,8 +332,11 @@ class BiliBiliVoice(object):
     def get_channel(self, name):
         """
         获取每个频道下具体的子栏目
+
         :param name: 频道名
+
         :return: 子栏目列表
+
         """
         name = name + '_channel_list'
         return channel_map[name]
@@ -238,16 +344,22 @@ class BiliBiliVoice(object):
     def get_auditorium_channel_detailed(self, name):
         """
         获取"放映厅"二级目录下的子栏目
+
         :param name: 二级下的目录频道名
+
         :return: 二级目录下的子栏目列表
+
         """
         return auditorium_channel_detailed_map[name]
 
     def channel_list(self, channel):
         """
         用于获取各种子栏目信息的生成器
+
         :param channel: 各种子栏目名
+
         :return: 信息列表
+
         """
         page_number = 1
         rid = channel_rid_map[channel]
@@ -290,11 +402,16 @@ class BiliBiliVoice(object):
     def get_play_total_time(self, av_number):
         """
         获取播放的总时间
+
         :param av_number: 播放id号
+
         :return: 总共的播放时间
+
         >>> bilibili = BiliBiliVoice()
+
         >>> a = bilibili.get_play_total_time('17100583')
-        210
+
+        >>> 210
         """
         data = {
             'aid': av_number,
@@ -315,6 +432,13 @@ class BiliBiliVoice(object):
         return total_time
 
     def get_search(self, keyword):
+        """
+        根据关键词，获取搜索结果
+
+        :param keyword: 搜索关键词
+
+        :return: 搜索结果
+        """
         page_number = 1
         while True:
             time_stamp = handle_time_stamp()

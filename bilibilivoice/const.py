@@ -10,6 +10,21 @@ import os
 
 
 class Constant(object):
+    """
+    常量使用地址
+
+    :param conf_dir: 整个文件目录地址
+
+    :param download_dir: 缓存文件夹地址
+
+    :param config_path: 配置文件地址
+
+    :param storage_path: 播放信息等存储地址
+
+    :param cookie_path: cookie存储地址
+
+    :param log_path: 日志存储地址
+    """
     conf_dir = os.path.join(os.path.expanduser('~'), '.bilibili-voice')
     download_dir = os.path.join(conf_dir, 'cached')
     config_path = os.path.join(conf_dir, 'config.json')

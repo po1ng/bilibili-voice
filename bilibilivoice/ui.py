@@ -13,6 +13,9 @@ from .scrollstring import truelen, scrollstring
 
 
 class Ui(object):
+    """
+    构造UI的类
+    """
     def __init__(self):
         self.screen = curses.initscr()
         self.screen.timeout(100)  # the screen refresh every 100ms
@@ -54,12 +57,16 @@ class Ui(object):
     def build_loading_process(self):
         """
         播放进度条缓冲
+
         """
         self.addstr(20, self.startcol, '哔哩哔哩 - ( ゜- ゜)つロ 乾杯~ - bilibili，loading...',
                     curses.color_pair(1))
         self.screen.refresh()
 
     def build_header(self):
+        """
+        生成头部bilibili voice的颜文字
+        """
         self.addstr(1, self.headercol, '   \ /     ||         ||     ||         ||')
         self.addstr(2, self.headercol, '|-------|  ||      \/ || \/  ||      \/ || \/')
         self.addstr(3, self.headercol, '| /   \ |  ||||||  || || ||  ||||||  || || ||         __   .   __   __')
@@ -69,14 +76,22 @@ class Ui(object):
 
     def build_menu(self, datatype, datalist, offset, step, index, title, start):
         """
-        菜单栏UI构造
+        菜单栏UI构造，大部分的菜单选项都由该方法构造生成
+
         :param datatype: 菜单类型
+
         :param datalist: 菜单列表
+
         :param offset: 该页面起始位置
+
         :param step: 该页面包括的菜单数
+
         :param index: 光标所处位置
+
         :param title: 进度菜单
+
         BiliBili Voice > 栏目 > 音乐
+
         :param start: 时间
         """
         curses.noecho()
@@ -103,6 +118,7 @@ class Ui(object):
 
 
                     # the length decides whether to scoll
+                    # 字符串长度决定了字符是否滚动出现
                     if truelen(name) < self.x - self.startcol - 1:
                         self.addstr(
                             i - offset + 9,
@@ -166,6 +182,26 @@ class Ui(object):
 
     def build_process_bar(self, now_playing, total_length, playing_flag,
                            now_time, total_time, pause_flag,  start, song_info=None):
+        """
+        生成音乐播放的进度条
+
+        :param now_playing: 当前播放音乐的进度，单位：秒
+
+        :param total_length: 当前播放音乐的总时间，单位：秒
+
+        :param playing_flag: 是否正在播放的标记
+
+        :param now_time: 当前播放音乐的进度，字符串
+
+        :param total_time: 当前播放音乐的总时间，字符串
+
+        :param pause_flag: 播放是否暂停的标记
+
+        :param start: 时间
+
+        :param song_info: 当前播放的歌曲的信息
+
+        """
         curses.noecho()
         self.screen.move(20, 1)
         self.screen.clrtoeol()
@@ -223,6 +259,9 @@ class Ui(object):
         self.screen.refresh()
 
     def build_search_bar(self):
+        """
+        构造搜索页面的头部
+        """
         curses.noecho()
         self.screen.move(6, 1)
         self.screen.clrtobot()
@@ -230,7 +269,15 @@ class Ui(object):
         self.screen.move(12, 24)
         self.screen.refresh()
 
+    # TODO 跳转构造器类
     def build_search(self):
+        """
+        构造搜索页面，并完成整体的搜索功能
+
+        :return: 关于搜索keyword的生成器
+
+        ..  seealso:: :any:`BiliBiliVoice.get_search`
+        """
         self.build_search_bar()
         keyword = self.get_search_keyword()
         self.keyword = keyword
@@ -239,11 +286,19 @@ class Ui(object):
         return generate_search
 
     def build_request_error(self):
+        """
+        网络情况不好时，错误信息返回
+
+        """
         content = '艾玛...好像有不知名的生物干扰了您的网络呢 (/= _ =)/~┴┴'
         self.addstr(19, self.startcol - 8, content, curses.color_pair(1))
 
 
     def get_search_keyword(self):
+        """
+        获取搜索关键词，keyword
+
+        """
         self.screen.timeout(-1)  # disable the screen timeout
         curses.echo()
         keyword = self.screen.getstr(10, self.startcol + 20, 60)

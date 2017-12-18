@@ -2,6 +2,14 @@ import time
 
 
 def str_to_time(time_str):
+    """
+    字符串到时间的转换，单位：秒
+
+    :param time_str: 时间字符串
+
+    :return: 换算的时间
+
+    """
     time_array = time_str.split(':')
     try:
         total_second = int(time_str[0]) * 3600 + int(time_array[1]) * 60 + int(time_array[2])
@@ -11,18 +19,31 @@ def str_to_time(time_str):
 
 
 def time_to_str(seconds):
+    """
+    时间（秒）换算成时间字符串
+
+    :param seconds: 时间
+
+    :return: 时间字符串
+    """
     m, s = divmod(seconds, 60)
     a = "%02d:%02d" % (m, s)
     return a
 
 
 def handle_time_stamp():
+    """
+    获取13位的时间戳
+    """
     t = time.time()
     t = str(t).replace('.', '')
     t = t[:13]
     return t
 
 def utf8_data_to_file(f, data):
+    """
+    数据编码转换
+    """
     if hasattr(data, 'decode'):
         f.write(data.decode('utf-8'))
     else:

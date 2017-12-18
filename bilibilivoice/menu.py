@@ -24,7 +24,9 @@ def carousel(left, right, x):
 
 
 class Menu(object):
-
+    """
+    整体程序的逻辑控制
+    """
     def __init__(self):
         self.screen = curses.initscr()
         self.title = 'BiliBili Voice'
@@ -61,6 +63,20 @@ class Menu(object):
         self.index = 0
 
     def start(self):
+        """
+        整体程序的运行入口，首先程序会先构建UI的header和主菜单，然后会根据用户
+        的不同操作，进行不同地逻辑处理
+
+        :rtype: Ui
+
+        :rtype: BiliBiliVoice
+
+        :rtype: Player
+
+        ..  seealso:: :any:`Ui.build_header`
+
+        ..  seealso:: :any:`Ui.build_menu`
+        """
         self.ui.build_header()
         self.ui.build_menu(self.datatype, self.datalist, self.offset, self.step, self.index, self.title, self.START)
         self.ui.build_process_bar(self.play.process_location, self.play.process_length,
@@ -197,6 +213,14 @@ class Menu(object):
         curses.endwin()
 
     def dispatch_enter(self, idx):
+        """
+        不同的逻辑具体操作，当按下D键时的后续选择操作
+
+        ..  note:: 提示
+
+             先把当前页面的信息存入stack中，方便回退的时候直接回退
+
+        """
         datatype = self.datatype
         title = self.title
         datalist = self.datalist
@@ -245,6 +269,10 @@ class Menu(object):
 
     # 没有下一级目录，就不进入下一级目录
     def pop(self, idx):
+        """
+        没有下一级目录，就不进入下一级目录
+        :param idx: 选择想要进入目录的位置id
+        """
         stack = self.stack
         up = stack.pop()
         self.datatype = up[0]
@@ -255,6 +283,9 @@ class Menu(object):
         self.enter_flag = False
 
     def choice_channel(self, idx):
+        """
+        主页面的功能选择
+        """
         bilibilivoice = self.bilibilivoice
         if idx == 0:
             self.title += ' > 栏目'
