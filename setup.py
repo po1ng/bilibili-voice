@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bilibili-voice',
-    version='0.1.2.0',
+    version='0.2.0.3',
     packages=find_packages(),
     install_requires=[
         'future',
@@ -26,7 +26,9 @@ setup(
     license='MIT',
     author='gogoforit',
     author_email='715157026@qq.com',
-    description='So nice, BiliBili Voice!',
+    description='bilibili-voice is a native audio player for BiliBili video in command line mode',
+    long_description=open('README.rst').read(),
     url='https://github.com/gogoforit/bilibili-voice',
     keywords=['music', 'bilibili', 'cli', 'voice'],
+    platforms=['Ubuntu', 'Mac OS']
 )
