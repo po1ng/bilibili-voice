@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bilibili-voice',
-    version='0.2.0.3',
+    version='0.2.0.4',
     packages=find_packages(),
     install_requires=[
         'future',
@@ -30,5 +30,4 @@ setup(
     long_description=open('README.rst').read(),
     url='https://github.com/gogoforit/bilibili-voice',
     keywords=['music', 'bilibili', 'cli', 'voice'],
-    platforms=['Ubuntu', 'Mac OS']
 )
